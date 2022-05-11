@@ -1,0 +1,13 @@
+[requires]
+sdl/2.0.20
+zlib/1.2.12
+bzip2/1.0.8
+openssl/1.1.1o
+boost/1.78.0
+
+[options]
+boost:i18n_backend_icu=True
+
+[generators]
+cmake_paths
+cmake_find_package

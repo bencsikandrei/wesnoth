@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.19)
+cmake_minimum_required(VERSION 3.14)
 
 project(wesnoth-conan)
 
@@ -13,13 +13,11 @@ include(conan.cmake)
 
 find_program(CONAN_CMD conan)
 
-message("Looking for a conan...")
+message(STATUS "Looking for a conan...")
 
 if(CONAN_CMD)
    conan_check(VERSION 0.0.0)
 endif()
-
-# See Makefile - CONAN_VERSION
 
 conan_add_remote(NAME conancenter INDEX 0 URL https://center.conan.io)
 

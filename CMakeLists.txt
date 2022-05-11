@@ -29,7 +29,7 @@ endfunction()
 # Options
 #
 
-if(NOT EXISTS "${CMAKE_SOURCE_DIR}/src/modules/lua/.git")
+if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/src/modules/lua/.git")
 	message(FATAL_ERROR "Lua submodule does not exist. You must run 'git submodule update --init --recursive' to initialize it.")
 else()
 	message("-- Lua submodule found.")
