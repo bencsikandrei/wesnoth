@@ -34,8 +34,21 @@ find_package(SDL2 QUIET NO_MODULE)
 if(SDL2_FOUND)
 	find_package_handle_standard_args(SDL2 HANDLE_COMPONENTS CONFIG_MODE)
 
-	# in some cases the target is an ALIAS, we want the original
-	get_target_property(_SDL2_ORIGINAL_TARGET "SDL2::SDL2" ALIASED_TARGET)
+	if(TARGET SDL2::SDL2)
+		# in some cases the target is an ALIAS, we want the original
+		get_target_property(_SDL2_ORIGINAL_TARGET "SDL2::SDL2" ALIASED_TARGET)
+	else()
+		# older versions did not have a target
+		add_library(SDL2::SDL2 INTERFACE IMPORTED)
+		set_target_properties(SDL2::SDL2 PROPERTIES
+			INTERFACE_INCLUDE_DIRECTORIES "${SDL2_INCLUDE_DIRS}"
+			INTERFACE_LINK_LIBRARIES "${SDL2_LIBRARIES}")
+		if(NOT TARGET SDL2::SDL2main)
+			# on *nix it seems that .pc files don't actually include libSDL2main, but for consistency's sake,
+			# let's add a phony library we can link with
+			add_library(SDL2::SDL2main INTERFACE IMPORTED)
+		endif()
+	endif()
 
 	# if it's a regular target, just set it to SDL2::SDL2
 	if(NOT _SDL2_ORIGINAL_TARGET)
@@ -43,7 +56,7 @@ if(SDL2_FOUND)
 	endif()
 
 	get_target_property(_SDL2_INCLUDE_DIRS_FROM_CONFIG "${_SDL2_ORIGINAL_TARGET}" INTERFACE_INCLUDE_DIRECTORIES)
-	
+
 	# in the original sdl2-config.cmake we get only <path>/include/SDL2 and in vcpkg we that + <path>/include/
 	if(_SDL2_INCLUDE_DIRS_FROM_CONFIG MATCHES ".*/include/SDL2.*")
 		get_filename_component(_SDL2_INCLUDE_DIRS "${_SDL2_INCLUDE_DIRS_FROM_CONFIG}" DIRECTORY)

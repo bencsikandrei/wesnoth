@@ -17,7 +17,6 @@ include_directories(SYSTEM ${PANGOCAIRO_INCLUDE_DIRS})
 include_directories(SYSTEM ${GETTEXT_INCLUDE_DIR})
 include_directories(SYSTEM ${LIBDBUS_INCLUDE_DIRS})
 if(NOT MSVC)
-	include_directories(SYSTEM ${SDL2IMAGE_INCLUDE_DIRS})
 	include_directories(SYSTEM ${SDL2MIXER_INCLUDE_DIRS})
 endif()
 
@@ -53,12 +52,12 @@ set(game-external-libs
 	${PANGOCAIRO_LIBRARIES}
 	${LIBDBUS_LIBRARIES}
 	VorbisFile::VorbisFile
+	SDL2::SDL2_image
 )
 
 if(NOT MSVC)
 	set(game-external-libs
 		${game-external-libs}
-		${SDL2IMAGE_LIBRARIES}
 		${SDL2MIXER_LIBRARIES}
 	)
 endif()
@@ -248,9 +247,9 @@ if(ENABLE_GAME)
 		Fontconfig::Fontconfig
 		SDL2::SDL2
 		SDL2::SDL2main
+		SDL2::SDL2_image
 	)
 	if(MSVC)
-		target_link_libraries(wesnoth SDL2::SDL2_image)
 		target_link_libraries(wesnoth SDL2::SDL2_mixer)
 	endif()
 
@@ -295,9 +294,9 @@ if(ENABLE_TESTS)
 		Fontconfig::Fontconfig
 		SDL2::SDL2
 		SDL2::SDL2main
+		SDL2::SDL2_image
 	)
 	if(MSVC)
-		target_link_libraries(boost_unit_tests SDL2::SDL2_image)
 		target_link_libraries(boost_unit_tests SDL2::SDL2_mixer)
 	endif()
 

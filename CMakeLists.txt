@@ -479,15 +479,14 @@ if(ENABLE_GAME OR ENABLE_TESTS)
 	find_package(PkgConfig REQUIRED)
 	find_package(Fontconfig REQUIRED)
 	find_package(SDL2 2.0.8 REQUIRED)
+	find_package(sdl2-image REQUIRED)
 	if(NOT MSVC)
 		# for everything else, use pkgconfig
-		# SDL2_image and SDL2_mixer don't seem to have any cmake configuration available at all
-		pkg_check_modules(SDL2IMAGE REQUIRED SDL2_image>=2.0.2)
+		# SDL2_mixer don't seem to have any cmake configuration available at all
 		pkg_check_modules(SDL2MIXER REQUIRED SDL2_mixer>=2.0.0)
 	else()
 		# for MSVC, vcpkg builds and provides custom SDL2-related modules for cmake to use, so use those
 		# this also fixes the issue with our previous FindSDL2* scripts incorrectly using the Release version of these libs instead of the Debug version
-		find_package(sdl2-image CONFIG REQUIRED)
 		find_package(sdl2-mixer CONFIG REQUIRED)
 	endif()
 	pkg_check_modules(CAIRO REQUIRED cairo>=1.10)
