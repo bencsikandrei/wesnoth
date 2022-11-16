@@ -1107,7 +1107,7 @@ int main(int argc, char** argv)
 			PLAIN_LOG << "Started on " << ctime(&t);
 		}
 
-		const std::string& exe_dir = filesystem::get_exe_dir();
+		const std::string exe_dir = filesystem::get_exe_dir();
 		if(!exe_dir.empty()) {
 			// Try to autodetect the location of the game data dir. Note that
 			// the root of the source tree currently doubles as the data dir.
